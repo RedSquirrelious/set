@@ -1,8 +1,5 @@
 const webpack = require('webpack')
 const path = require('path')
-let htmlWebpackPlugin = require('html-webpack-plugin')
-let BowerWebpackPlugin = require('bower-webpack-plugin')
-const nodeExternals = require('webpack-node-externals')
 const port = 3000
 
 module.exports = {
@@ -51,8 +48,12 @@ module.exports = {
                 }
             },
             {
-                test: /(\.css)$/,
-                use: ['style-loader','css-loader']
+                test: /\.css$/,
+                loader: "style-loader!css-loader"
+            },
+            {
+                test: /\.scss$/,
+                loaders: ['style-loader', 'css-loader']
             },
             {
                 test: /\.(gif|jpe?g|png|ico)$/,

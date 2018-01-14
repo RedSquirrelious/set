@@ -2,8 +2,8 @@ import React from 'react'
 
 const Card = (props) => {
     return (
-        <div className='card' >
-            <img src={`${props.imageName}`} />
+        <div className='myCard' >
+            <img src={`${props.imageName}`} key={props.imageName}/>
         </div>
     )
 }
