@@ -1,17 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+require('./styles/app.css')
 import Card from './components/Card'
-import {star_pink_pattern_1} from './assets/assetList'
-
 
 class MainComponent extends React.Component {
     render() {
+        const image = require('./assets/assetList.js')
+        
         return (
         <div>
-                <p>HELLO</p>
-                {/* <Card imageName={image}/> */}
-                <img src={star_pink_pattern_1} />
+                <Card
+                    className='card'
+                    imageName={image.paw_green_pattern_2}
+                />
         </div>
         )
     }

@@ -22,12 +22,16 @@ module.exports = {
         filename: 'bundle.js'
     },
     devServer: {
-        contentBase: path.resolve(__dirname, 'src'),
+        contentBase: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'public', 'assets'), path.resolve(__dirname, 'public', 'assets', 'images')],
         historyApiFallback: true,
         hot: true,
+        overlay: true,
         port: port,
         publicPath: '/',
-        noInfo: false
+        noInfo: false,
+        before(app) {
+            app.use(express.static(path.join(__dirname, 'src', 'assets', 'images')))
+        }
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
@@ -48,12 +52,7 @@ module.exports = {
             },
             {
                 test: /(\.css)$/,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css',
-                    },
-                ]
+                use: ['style-loader','css-loader']
             },
             {
                 test: /\.(gif|jpe?g|png|ico)$/,
