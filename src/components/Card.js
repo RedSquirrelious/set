@@ -2,7 +2,7 @@ import React from 'react'
 
 const Card = (props) => {
     return (
-        <div className={`${props.className}`} >
+        <div className='card' >
             <img src={`${props.imageName}`} />
         </div>
     )
