@@ -25,13 +25,17 @@ module.exports = {
         overlay: true,
         port: port,
         publicPath: '/',
-        noInfo: false,
         before(app) {
             app.use(express.static(path.join(__dirname, 'src', 'assets', 'images')))
         }
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+            "process.env": {
+                NODE_ENV: JSON.stringify("production")
+            }
+        }),
         new webpack.optimize.UglifyJsPlugin()
     ],
     module: {
@@ -43,7 +47,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     query: {
-                        presets: 'es2015'
+                        presets: ['es2015', 'stage-1']
                     }
                 }
             },
