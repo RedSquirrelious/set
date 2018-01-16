@@ -1,10 +1,11 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import {MuiThemeProvider} from 'material-ui'
-// import createMuiTheme from 'material-ui/styles/createMuiTheme'
+import { MuiThemeProvider } from 'material-ui'
+import createMuiTheme from 'material-ui/styles/createMuiTheme'
 
 import Table from './Table'
 
+const defaultTheme = createMuiTheme()
 
 export default class MainComponent extends React.Component {
     render() {
@@ -12,11 +13,11 @@ export default class MainComponent extends React.Component {
         const allImages = image.allImages
 
         return (
-
+            <MuiThemeProvider theme={defaultTheme}>
                 <Provider store={this.props.store}>
                     <Table images={allImages}/>
                 </Provider>
-
+            </MuiThemeProvider>
         )
     }
 }

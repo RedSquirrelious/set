@@ -40,7 +40,10 @@ const generateDeckOfCards = (array) => {
 
 const makeCard = (image) => {
     let card = {}
-    card.img = image
+    card.url = image
+    card.key = image
+    card.title = image
+    card.width = '10%'
     return card
 }
 
