@@ -1,41 +1,44 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { GridList, GridTile } from 'material-ui/GridList'
-import IconButton from 'material-ui/IconButton';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import GridList, { GridListTile } from 'material-ui/GridList'
+import IconButton from 'material-ui/IconButton'
 
 import { dealCards, selectCard } from '../actions/boardActions'
 
 const Board = (props) => {
-    const deck = props.cards? props.cards : []
-    return (
-        <div style={styles.root}>
-            <GridList
-                cols={6}
-                cellHeight={200}
-                style={styles.gridList}
-            >
-                {deck.map((card) => (
-                    <GridTile
-                        key={card.img}
-                        title={card.img}
-                        actionIcon={<IconButton
-                            onClick={() => doSomething(card.img)}
-                        ><StarBorder color="white" /></IconButton>}
-                        actionPosition="left"
-                        titlePosition="top"
-                        titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-                    >
-                        <img src={card.img}
-                            style={styles.gridTile}
-                        />
-                    </GridTile>
-                ))}
-            </GridList>
-        </div>
-    )
+    return renderGrid(props.cards)
 }
 
+const renderGrid = (props) => {
+    if (props.onBoard.length > 0) {
+        const deck = props.onBoard
+        return (
+            <div style={styles.root}>
+                <GridList 
+                    cols={6}
+                    cellHeight={200}
+                    style={styles.gridList}>
+                    {deck.map(tile => (
+                        <GridListTile key={tile.img} cols={1}>
+                            <img 
+                                src={tile.img} 
+                                alt={tile.img} 
+                                style={styles.gridTile}/>
+                        </GridListTile>
+                    )
+                    )}
+                </GridList>
+            </div>
+        )
+    }
+    else {
+        return <div><p>NOOOOOO</p></div>
+    }
+}
+
+const renderTile = (data) => {
+    <p>data</p>
+}
 
 export const doSomething = (props) => {
     console.log(props)

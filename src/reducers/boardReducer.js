@@ -2,10 +2,11 @@ import defaultState from '../defaults'
 import {SELECT_CARD} from '../actions/boardActions'
 import * as tableActions from '../actions/tableActions'
 
+// const defaultState = {}
+
 const boardReducer = (state = defaultState, action) => {
     switch(action.type) {
         case tableActions.DEAL_CARDS:
-            console.log('STATE ***** ', state)
             let forBoard = action.cards.slice(0, 12)
             let forDeck = action.cards.slice(13)
             let boardStart = {
@@ -13,6 +14,8 @@ const boardReducer = (state = defaultState, action) => {
                 played: [],
                 inDeck: forDeck
             }
+            let newState = {...state, cards: boardStart, dealt:true}
+            
             return { ...state, cards: boardStart, dealt: true }
         case 'SELECT_CARD':
             const updatedCards = updateCards(state, action.card)

@@ -15,16 +15,15 @@ export class Table extends React.Component {
 
     componentDidMount() {
         const { dealt, images, dispatch } = this.props
-
+        
         if (dealt === false) {
             let deck = generateDeckOfCards(images)
-            console.log(deck)
-            console.log(this.props)
             dispatch(tableActions.dealCards(deck))
         }
     }
     render() {
         const {cards} = this.props
+        
         return (
             <div>
                 <Board cards={cards}/>
@@ -55,13 +54,10 @@ const shuffleArray = (array) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log('Table ownProps', ownProps)
-    console.log('Table state', state)
     return {
         ...ownProps,
         dealt: state.dealt,
-        cards: state.cards.onBoard
-
+        cards: state.cards
     }
 }
 
