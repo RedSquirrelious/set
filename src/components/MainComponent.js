@@ -10,14 +10,15 @@ const defaultTheme = createMuiTheme()
 export default class MainComponent extends React.Component {
     render() {
         const image = require('../assets/assetList.js')
-        const allImages = image.allImages
+        const rawImages = Object.entries(image)       
 
         return (
             <MuiThemeProvider theme={defaultTheme}>
                 <Provider store={this.props.store}>
-                    <Table images={allImages}/>
+                    <Table images={rawImages}/>
                 </Provider>
             </MuiThemeProvider>
         )
     }
 }
+

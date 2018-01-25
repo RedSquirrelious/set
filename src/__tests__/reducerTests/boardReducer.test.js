@@ -1,4 +1,4 @@
-import reducer, { updateCards } from '../../reducers/boardReducer'
+import reducer, { updateCards } from '../../reducers/tableReducer'
 import defaultState from '../../defaults'
 
 describe('boardReducer', () => {
@@ -7,7 +7,7 @@ describe('boardReducer', () => {
         describe('when everything has the needed value', () => {
             it('should add the card to the played pile', () => {
                 const testAction = {
-                    card: { img: 'TEST' }
+                    card: { id: 'TEST' }
                 }
                 const testState = {
                     onBoard: [],
@@ -15,55 +15,55 @@ describe('boardReducer', () => {
                     inDeck: []
                 }
 
-                expect(updateCards(testState, testAction.card).played).toEqual([{ img: 'TEST' }])
+                expect(updateCards(testState, testAction.card).played).toEqual([{ id: 'TEST' }])
             })
 
             it('should remove the played card from the board', () => {
                 const testAction = {
-                    card: { img: 'TEST' }
+                    card: { id: 'TEST' }
                 }
                 const testState = {
-                    onBoard: [{ img: 'TEST' }],
+                    onBoard: [{ id: 'TEST' }],
                     played: [],
-                    inDeck: [{ img: 'NEW_CARD' }]
+                    inDeck: [{ id: 'NEW_CARD' }]
                 }
 
-                expect(updateCards(testState, testAction.card).onBoard).not.toContain([{ img: 'TEST' }])
+                expect(updateCards(testState, testAction.card).onBoard).not.toContain([{ id: 'TEST' }])
             })
 
             it('should put a new card on the board', () => {
                 const testAction = {
-                    card: { img: 'TEST' }
+                    card: { id: 'TEST' }
                 }
                 const testState = {
-                    onBoard: [{ img: 'TEST' }],
+                    onBoard: [{ id: 'TEST' }],
                     played: [],
-                    inDeck: [{ img: 'NEW_CARD' }]
+                    inDeck: [{ id: 'NEW_CARD' }]
                 }
 
-                expect(updateCards(testState, testAction.card).onBoard).toEqual([{ img: 'NEW_CARD' }])
+                expect(updateCards(testState, testAction.card).onBoard).toEqual([{ id: 'NEW_CARD' }])
             })
 
             it('should remove a card from the deck', () => {
                 const testAction = {
-                    card: { img: 'TEST' }
+                    card: { id: 'TEST' }
                 }
                 const testState = {
-                    onBoard: [{ img: 'TEST' }],
+                    onBoard: [{ id: 'TEST' }],
                     played: [],
-                    inDeck: [{ img: 'NEW_CARD' }]
+                    inDeck: [{ id: 'NEW_CARD' }]
                 }
 
-                expect(updateCards(testState, testAction.card).inDeck).not.toContain([{ img: 'NEW_CARD' }])
+                expect(updateCards(testState, testAction.card).inDeck).not.toContain([{ id: 'NEW_CARD' }])
             })
         })
 
         describe('when there are no more cards in the deck', () => {
             const testAction = {
-                card: { img: 'TEST' }
+                card: { id: 'TEST' }
             }
             const testState = {
-                onBoard: [{ img: 'TEST' }],
+                onBoard: [{ id: 'TEST' }],
                 played: [],
                 inDeck: []
             }
@@ -77,18 +77,22 @@ describe('boardReducer', () => {
     describe('SELECT_CARD', ()=> {
         const testAction = {
             type: 'SELECT_CARD',
-            card: { img: 'TEST' }
+            card: { id: 'TEST' }
         }
         const testState = {
-            onBoard: [{ img: 'TEST' }],
-            played: [],
-            inDeck: []
+            cards: {
+                onBoard: [{ id: 'TEST' }],
+                played: [],
+                inDeck: []
+            }
         }
 
+        let result = reducer(testState, testAction)
+        console.log(result)
         it('should return updated state', () => {
-            expect(reducer(testState, testAction).onBoard).toEqual([])
-            expect(reducer(testState, testAction).played).toEqual([{ img: 'TEST' }])
-            expect(reducer(testState, testAction).inDeck).toEqual([])
+            expect(reducer(testState, testAction).cards.onBoard).toEqual([])
+            expect(reducer(testState, testAction).cards.played).toEqual([{ id: 'TEST' }])
+            expect(reducer(testState, testAction).cards.inDeck).toEqual([])
         })
     })
 

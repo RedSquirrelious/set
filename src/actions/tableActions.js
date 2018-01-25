@@ -7,4 +7,11 @@ export const dealCards = (cards) => {
     }
 }
 
+export const SELECT_CARD = 'SELECT_CARD'
+
+export const selectCard = (card) => ({
+    type: SELECT_CARD,
+    card
+})
+
 export default dealCards

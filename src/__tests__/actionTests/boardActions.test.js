@@ -1,4 +1,4 @@
-import { selectCard } from '../../actions/boardActions'
+import { selectCard } from '../../actions/tableActions'
 
 describe('boardActions', () => {
     describe('selectCard', () => {

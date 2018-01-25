@@ -4,7 +4,9 @@ const defaultState = {
         played: [],
         inDeck: []
     },
-    dealt: false
+    dealt: false,
+    tentativeSet: [],
+    sets: 0
 }
 
 export default defaultState

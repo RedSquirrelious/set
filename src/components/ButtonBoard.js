@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import GridList, { GridListTile } from 'material-ui/GridList'
 import ButtonBase from 'material-ui/ButtonBase'
 import Typography from 'material-ui/Typography'
 
@@ -8,7 +9,7 @@ const styles = theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-        minWidth: 1000,
+        minWidth: 700,
         width: '100%',
     },
     image: {
@@ -50,7 +51,7 @@ const styles = theme => ({
         top: 0,
         bottom: 0,
         backgroundSize: 'cover',
-        backgroundPosition: 'center 40%',
+        backgroundPosition: 'center 100%',
         height: 200,
         width: 200
     },
@@ -60,7 +61,7 @@ const styles = theme => ({
         right: 0,
         top: 0,
         bottom: 0,
-        // backgroundColor: theme.palette.common.black,
+        backgroundColor: theme.palette.common.white,
         opacity: 0.4,
         transition: theme.transitions.create('opacity'),
     },
@@ -71,7 +72,7 @@ const styles = theme => ({
     imageMarked: {
         height: 3,
         width: 18,
-        // backgroundColor: theme.palette.common.white,
+        backgroundColor: theme.palette.common.black,
         position: 'absolute',
         bottom: -2,
         left: 'calc(50% - 9px)',
@@ -84,9 +85,11 @@ function ButtonBases(props) {
     return (
         <div className={classes.root}>
             {images.map(image => (
+
                 <ButtonBase
                     focusRipple
                     key={image.key}
+                    onClick={() => null}
                     className={classes.image}
                     style={{
                         width: image.width,
@@ -99,17 +102,6 @@ function ButtonBases(props) {
                         }}
                     />
                     <div className={classes.imageBackdrop} />
-                    <div className={classes.imageButton}>
-                        <Typography
-                            component="h3"
-                            type="subheading"
-                            color="inherit"
-                            className={classes.imageTitle}
-                        >
-                            {image.img}
-                            <div className={classes.imageMarked} />
-                        </Typography>
-                    </div>
                 </ButtonBase>
             ))}
         </div>

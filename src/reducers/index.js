@@ -8,4 +8,4 @@ import board from './boardReducer'
 //     board
 // })
 
-export default board
+export default table
