@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Board from './Board'
-import { dealCards, selectCard } from '../actions/tableActions'
+import { dealCards, selectCard, checkSet } from '../actions/gameActions'
 
-export class Table extends React.Component {
+export class Game extends React.Component {
 
     static propTypes = {
         images: PropTypes.array,
@@ -14,11 +14,15 @@ export class Table extends React.Component {
     }
 
     componentDidMount() {
-        const { dealt, images, dispatch } = this.props
+        const { dealt, images, cards, dispatch } = this.props
         
         if (dealt === false) {
             let deck = generateDeckOfCards(images)
             dispatch(dealCards(deck))
+        }
+
+        if (cards && cards.played && cards.played.length === 3) {
+            dispatch(checkSet(cards.played))
         }
     }
     render() {
@@ -72,4 +76,4 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-export default connect(mapStateToProps)(Table)
+export default connect(mapStateToProps)(Game)

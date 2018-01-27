@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { MuiThemeProvider } from 'material-ui'
 import createMuiTheme from 'material-ui/styles/createMuiTheme'
 
-import Table from './Table'
+import Game from './Game'
 
 const defaultTheme = createMuiTheme()
 
@@ -15,7 +15,7 @@ export default class MainComponent extends React.Component {
         return (
             <MuiThemeProvider theme={defaultTheme}>
                 <Provider store={this.props.store}>
-                    <Table images={rawImages}/>
+                    <Game images={rawImages}/>
                 </Provider>
             </MuiThemeProvider>
         )

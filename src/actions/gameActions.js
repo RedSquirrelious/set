@@ -14,4 +14,12 @@ export const selectCard = (card) => ({
     card
 })
 
+export const CHECK_SET = 'CHECK_SET'
+
+export const checkSet = (cards) => ({
+    type: CHECK_SET,
+    types: ['color', 'shape', 'fill', 'number'],
+    cards
+})
+
 export default dealCards

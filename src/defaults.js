@@ -6,7 +6,8 @@ const defaultState = {
     },
     dealt: false,
     tentativeSet: [],
-    sets: 0
+    points: 0,
+    set: false
 }
 
 export default defaultState
