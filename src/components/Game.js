@@ -2,6 +2,8 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import { withTheme } from 'material-ui/styles'
 
 import Board from './Board'
 import { dealCards, selectCard, checkSet } from '../actions/gameActions'
@@ -21,9 +23,9 @@ export class Game extends React.Component {
             dispatch(dealCards(deck))
         }
 
-        if (cards && cards.played && cards.played.length === 3) {
-            dispatch(checkSet(cards.played))
-        }
+        // if (cards && cards.played && cards.tentativeSet.length === 3) {
+        //     dispatch(checkSet(cards.played))
+        // }
     }
     render() {
         const {cards, dispatch } = this.props
@@ -55,6 +57,7 @@ const makeCards = (array) => {
         fill: data[2],
         number: data[3],
         url: array[1],
+        selected: false,
         width: '10%'
     }
 }
@@ -66,6 +69,15 @@ const shuffleArray = (array) => {
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array
+}
+
+const newSelectCard = (cards, card) => {
+    if (cards.tentativeSet.length === 3) {
+        dispatch(checkSet(cards.tentativeSet))
+    }
+    else {
+        return
+    }
 }
 
 const mapStateToProps = (state, ownProps) => {

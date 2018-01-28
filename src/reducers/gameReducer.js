@@ -2,7 +2,7 @@ import defaultState from '../defaults'
 import { DEAL_CARDS, SELECT_CARD, CHECK_SET } from '../actions/gameActions'
 import * as gameActions from '../actions/gameActions'    
 
-const tableReducer = (state = defaultState, action) => {
+const gameReducer = (state = defaultState, action) => {
     switch (action.type) {
         case DEAL_CARDS:
             let forBoard = action.cards.slice(0, 18)
@@ -16,6 +16,7 @@ const tableReducer = (state = defaultState, action) => {
         case SELECT_CARD:
             const updatedCards = updateCards(state.cards, action.card)
             return { ...state, cards: updatedCards }
+
         case CHECK_SET:
             const isSet = checkSetOverall(action.cards, action.types)
             const updatedPoints = updatePoints(isSet, state.points)
@@ -24,6 +25,10 @@ const tableReducer = (state = defaultState, action) => {
             return state
     }
 }
+
+// export const updateBoard = () => {
+
+// }
 
 export const updateCards = (cards, card) => {
     let updatedPlayed = [].concat(cards.played)
@@ -72,4 +77,4 @@ export const updatePoints = (isSet, points) => {
 }
 
 
-export default tableReducer
+export default gameReducer
