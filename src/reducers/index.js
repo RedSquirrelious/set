@@ -1,11 +1,5 @@
 import { combineReducers } from 'redux'
 
-import table from './tableReducer'
-import board from './boardReducer'
+import game from './gameReducer'
 
-// export default combineReducers({
-//     table, 
-//     board
-// })
-
-export default table
+export default game
