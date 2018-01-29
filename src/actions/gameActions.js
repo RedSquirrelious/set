@@ -36,4 +36,10 @@ export const setYesSet = (possibleSet) => ({
     cards: possibleSet
 })
 
+export const ADD_THREE_CARDS = 'ADD_THREE_CARDS'
+
+export const addThreeCards = () => ({
+    type: ADD_THREE_CARDS
+})
+
 export default dealCards

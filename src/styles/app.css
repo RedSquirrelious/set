@@ -2,3 +2,15 @@
     height: 25%;
     width: 25%;
 }
+
+.header {
+    display: flex;
+    justify-content: center;
+
+}
+
+.score {
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+}

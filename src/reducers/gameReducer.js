@@ -1,5 +1,5 @@
 import { defaultGame } from '../defaults'
-import { DEAL_CARDS, SELECT_CARD, CHECK_SET, SET_NO_SET, SET_YES_SET } from '../actions/gameActions'
+import { DEAL_CARDS, SELECT_CARD, CHECK_SET, SET_NO_SET, SET_YES_SET, ADD_THREE_CARDS } from '../actions/gameActions'
 import * as gameActions from '../actions/gameActions'    
 
 const defaultState = defaultGame
@@ -13,10 +13,8 @@ const gameReducer = (state = defaultState, action) => {
             const updatedPoints = updatePoints(isSet, state.points)
             return { ...state, points: updatedPoints, haveSet: isSet, checkingSet: true}
         case SET_NO_SET:
-            console.log('boooooooo')
-            return {...state, haveSet: false, checkingSet: false}
         case SET_YES_SET:
-            console.log('yay')
+            return { ...state, haveSet: false, checkingSet: false }
         default:
             return state
     }

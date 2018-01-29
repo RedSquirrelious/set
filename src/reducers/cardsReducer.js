@@ -1,5 +1,4 @@
-// import { defaultCards } from '../defaults'
-import { DEAL_CARDS, SELECT_CARD, CHECK_SET, SET_NO_SET, SET_YES_SET } from '../actions/gameActions'
+import { DEAL_CARDS, SELECT_CARD, CHECK_SET, SET_NO_SET, SET_YES_SET, ADD_THREE_CARDS } from '../actions/gameActions'
 import * as gameActions from '../actions/gameActions'    
 import { updateCards } from './gameReducer';
 
@@ -13,16 +12,9 @@ const defaultState =  {
 const cardsReducer = (state = defaultState, action) => {
     switch (action.type) {
         case DEAL_CARDS:
-            console.log('cardsReducer cards', action.cards)
             let deckCopy = [...action.cards]
             let updatedOnBoard = deckCopy.slice(0, 18)
             let updatedInDeck = deckCopy.slice(19)
-            
-            
-        
-            // for (let i = 0; i < forDeck.length; i++) {
-            //     updatedInDeck[forDeck[i].id] = forDeck[i]
-            // }
             return { ...state, onBoard: updatedOnBoard, inDeck: updatedInDeck}
         case SELECT_CARD:
             let onBoardCopy = [...state.onBoard]
@@ -34,9 +26,6 @@ const cardsReducer = (state = defaultState, action) => {
         case SET_NO_SET:
             let tempNoSet = {...state}
             let boardWithoutSet = updateCardSelectionStatus(tempNoSet.onBoard, tempNoSet.possibleSet)
-            console.log('UGH')
-            debugger
-            console.log(tempNoSet)
             return { ...state, onBoard: boardWithoutSet, possibleSet: []}
         case SET_YES_SET:
             let tempCards = moveCardsFromInDeckToOnBoard({...state})
@@ -44,9 +33,11 @@ const cardsReducer = (state = defaultState, action) => {
             tempCards.onBoard = cleanedUpOnBoard
             tempCards.played = tempCards.played.concat(tempCards.possibleSet)
             tempCards.possibleSet = []
-            console.log('tempCards!!!', tempCards)
-            debugger
             return tempCards
+        case ADD_THREE_CARDS:
+            let movedCards = moveCardsFromInDeckToOnBoard({ ...state })
+            debugger
+            return movedCards
         default:
             return state
     }
@@ -57,50 +48,29 @@ const updateCardSelectionStatus = (cardsOnBoard, selectedCards) => {
     let updatedCard
     let cardIndex
     for (let i = 0; i < selectedCards.length; i++) {
-        debugger
+
         cardIndex = cardsOnBoard.findIndex(card => card.id === selectedCards[i].id)
         updatedCard = {...cardsOnBoard[cardIndex], selected: false}
         cardsOnBoard[cardIndex] = updatedCard
     }
-    console.log('should be 3 cards none selected', cardsOnBoard)
     return cardsOnBoard
 }
 
 export const updateOnBoardAfterSet = (cardsOnBoard, set) => {
-    debugger
     let updatedCards = cardsOnBoard.filter(card => card.selected === false)
-    debugger
     return updatedCards
 }
 
 export const moveCardsFromInDeckToOnBoard = (cards) => {
     let newCard
-    debugger
     if (cards.inDeck.length != 0) {
         for (let i = 3; i > 0; i--) {
-            debugger
             newCard = cards.inDeck.pop()
             cards.onBoard.push(newCard)
-            debugger
+    
         }
     }
-    debugger
     return cards
 }
 
-// export const updateCardsAfterSet = (cards, card) => {
-//     let updatedPlayed = [].concat(cards.played)
-//     let updatedBoard = cards.onBoard.filter(c => c.id != card.id)
-//     updatedBoard = updatedBoard.length > 0 ? updatedBoard : []
-//     let updatedDeck = [...cards.inDeck]
-//     const newCard = updatedDeck.length > 0 ? updatedDeck.pop() : null
-//     updatedPlayed.push(card)
-//     if (newCard) { updatedBoard.push(newCard) }
-//     const updatedCards = {
-//         onBoard: updatedBoard,
-//         played: updatedPlayed,
-//         inDeck: updatedDeck
-//     }
-//     return updatedCards
-// }
 export default cardsReducer

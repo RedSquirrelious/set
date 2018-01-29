@@ -2,13 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import GridList, { GridListTile } from 'material-ui/GridList'
 
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles'
 import { withTheme } from 'material-ui/styles'
-import ButtonBases from './ButtonBases'
 import ButtonBase from 'material-ui/ButtonBase'
-import SimpleMediaCard from './SimpleMediaCard'
-
 
 class Board extends React.Component {
     render() {
@@ -29,7 +25,6 @@ class Board extends React.Component {
                                 onClick={(selectedCard) => {
                                     onClick(selectedCard.target)}
                                 }
-                                
                             >
                                 <span className={styles.imageBackdrop} />
                                 <GridListTile key={card.id} cols={1}>

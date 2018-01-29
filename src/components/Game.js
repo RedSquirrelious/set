@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Board from './Board'
-import { dealCards, selectCard, setNoSet, setYesSet } from '../actions/gameActions'
+import Scoreboard from './Scoreboard'
+import AddCards from './AddCards'
+import { dealCards, selectCard, setNoSet, setYesSet, addThreeCards } from '../actions/gameActions'
 
 export class Game extends React.Component {
 
@@ -16,17 +18,10 @@ export class Game extends React.Component {
 
     componentDidMount() {
         const { dealt, images, cards, set, theme, dispatch } = this.props
-        console.log('game props in component did mount', this.props)
         if (dealt === false) {
-            console.log('false here in dealt')
             let deck = generateDeckOfCards(images)
             dispatch(dealCards(deck))
         }
-
-        // if (cards && cards.played && cards.played.length === 3) {
-        //     dispatch(checkSet(cards.played))
-        // }
-
         if (set && set.length === 3) {
             console.log('i have 3 cards in my set')
             dispatch(checkSet(set))
@@ -34,23 +29,30 @@ export class Game extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log('componentDidUpdate props', this.props)
         const { possibleSet, haveSet, checkingSet, dispatch } = this.props
         if (possibleSet && possibleSet.length === 3) {
-            console.log('i have 3 cards in my possibleSet')
             checkSetOverall(possibleSet, cardTypes, dispatch)
         }
     }
     render() {
-        const {cards, dispatch, theme } = this.props
-        
+        const {cards, score, dispatch, theme } = this.props       
         return (
             <div>
-                <Board 
-                    cards={cards}
-                    theme={theme}
-                    onClick={(card) => dispatch(selectCard(card))}
-            />
+                <div className='header'>
+                    <Scoreboard 
+                        score={score}
+                    />
+                    <AddCards 
+                        addMethod={() => addCards(cards.inDeck, dispatch)}
+                    />
+                </div>
+                <div>
+                    <Board 
+                        cards={cards}
+                        theme={theme}
+                        onClick={(card) => dispatch(selectCard(card))}
+                />
+                </div>
             </div>
         )
     }
@@ -105,27 +107,31 @@ export const checkSetByType = (tentativeSet, type) => {
 }
 
 export const checkSetOverall = (tentativeSet, types, dispatch) => {
-    console.log(dispatch)
     let counter = 0
     for (let i = 0; i < types.length; i++) {
         counter += checkSetByType(tentativeSet, types[i])
     }
-    console.log('checking this set', tentativeSet)
-    debugger
     counter < 10 ? 
         dispatch(setYesSet(tentativeSet))
         : dispatch(setNoSet(tentativeSet)) 
 }
 
+const addCards = (inDeck, dispatch) => {
+    console.log('this should go somewhere')
+    if (inDeck.length > 0) {
+        dispatch(addThreeCards())
+    }
+}
+
 const mapStateToProps = (state, ownProps) => {
-    console.log('game state from mapstate2props', state)
     return {
         ...ownProps,
         dealt: state.game.dealt,
         cards: state.cards,
         possibleSet: state.cards.possibleSet,
         haveSet: state.haveSet,
-        checkingSet: state.checkingSet
+        checkingSet: state.checkingSet,
+        score: state.player.score
     }
 }
 
