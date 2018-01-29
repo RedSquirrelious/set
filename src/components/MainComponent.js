@@ -15,7 +15,10 @@ export default class MainComponent extends React.Component {
         return (
             <MuiThemeProvider theme={defaultTheme}>
                 <Provider store={this.props.store}>
-                    <Game images={rawImages}/>
+                    <Game 
+                        images={rawImages}
+                        theme={defaultTheme}
+                    />
                 </Provider>
             </MuiThemeProvider>
         )

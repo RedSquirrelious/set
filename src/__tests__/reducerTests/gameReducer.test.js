@@ -88,7 +88,6 @@ describe('boardReducer', () => {
         }
 
         let result = reducer(testState, testAction)
-        console.log(result)
         it('should return updated state', () => {
             expect(reducer(testState, testAction).cards.onBoard).toEqual([])
             expect(reducer(testState, testAction).cards.played).toEqual([{ id: 'TEST' }])

@@ -14,8 +14,15 @@ const gameReducer = (state = defaultState, action) => {
             }
             return { ...state, cards: boardStart, dealt: true }
         case SELECT_CARD:
-            const updatedCards = updateCards(state.cards, action.card)
-            return { ...state, cards: updatedCards }
+            let copyOfState = {...state}
+            console.log(copyOfState)
+            console.log(action.card)
+            copyOfState.cards.onBoard = replaceCard([...state.cards.onBoard], action.card)
+            copyOfState.tentativeSet = state.tentativeSet.concat([action.card])
+            
+            // let updatedCards = updateCards(copyOfState.cards, action.card)
+            
+            return copyOfState
         case CHECK_SET:
             const isSet = checkSetOverall(action.cards, action.types)
             const updatedPoints = updatePoints(isSet, state.points)
@@ -23,6 +30,12 @@ const gameReducer = (state = defaultState, action) => {
         default:
             return state
     }
+}
+
+const replaceCard = (cards, card) => {
+    var foundIndex = cards.findIndex(c => c.id == card.id);
+    cards[foundIndex].selected = true
+    return cards
 }
 
 export const updateCards = (cards, card) => {

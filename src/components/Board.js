@@ -1,51 +1,85 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import GridList, { GridListTile } from 'material-ui/GridList'
-import { withStyles } from 'material-ui/styles'
-import ButtonBase from 'material-ui/ButtonBase'
 
-const Board = (props) => {
-    if (props && props.cards.onBoard && props.cards.onBoard.length > 0) {
-        const deck = props.cards.onBoard
-        return (
-            <div style={styles.root}>
-                <GridList
-                    cols={6}
-                    cellHeight={200}
-                    style={styles.gridList}>
-                    {deck.map(card => (
-                        <ButtonBase
-                            key={card.id}
-                            onClick={(selectedCard) => {
-                                props.onClick(selectedCard.target)}
-                            }
-                        >
-                            <GridListTile key={card.id} cols={1}>
-                                <img
-                                    id={card.id}
-                                    src={card.url}
-                                    alt={card.id}
-                                    color={card.color}
-                                    fill={card.fill}
-                                    number={card.number}
-                                    shape={card.shape}
-                                    style={styles.gridTile} />
-                            </GridListTile>
-                        </ButtonBase>
-                    )
-                    )}
-                </GridList>
-            </div>
-        )
+import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import { withStyles } from 'material-ui/styles'
+import { withTheme } from 'material-ui/styles'
+import ButtonBases from './ButtonBases'
+import ButtonBase from 'material-ui/ButtonBase'
+import SimpleMediaCard from './SimpleMediaCard'
+
+// class Board extends React.Component {
+//     render() {
+//         let deck
+//         const { cards, onClick, dispatch, theme } = this.props
+//         if (cards && cards.onBoard && cards.onBoard.length > 0) {
+//              deck = cards.onBoard
+//              console.log('deck', deck)
+//         }
+//         else {
+//             deck = []
+//         }
+//         return (
+//             <ButtonBases
+//                 images={deck}
+//                 />
+//         )
+//     }
+// }
+
+class Board extends React.Component {
+    render() {
+        const { cards, onClick, dispatch, theme } = this.props
+        const styles = fillStyles(theme)
+        console.log('theme from board', theme)
+        if (cards && cards.onBoard && cards.onBoard.length > 0) {
+            const deck = cards.onBoard
+            console.log('deck on board', deck)
+            return (
+                <div style={styles.root}>
+                    <GridList
+                        cols={6}
+                        cellHeight={200}
+                        style={styles.gridList}>
+                        {deck.map(card => (
+                            <ButtonBase
+                                focusRipple
+                                key={card.id}
+                                onClick={(selectedCard) => {
+                                    onClick(selectedCard.target)}
+                                }
+                                
+                            >
+                                <span className={styles.imageBackdrop} />
+                                <GridListTile key={card.id} cols={1}>
+                                    <img
+                                        id={card.id}
+                                        src={card.url}
+                                        alt={card.id}
+                                        color={card.color}
+                                        fill={card.fill}
+                                        number={card.number}
+                                        shape={card.shape}
+                                        style={card.selected ? styles.gridTile : {...styles.gridTile, border: 'solid black'}} 
+                                        />
+                                </GridListTile>
+                            </ButtonBase>
+                            )
+                        )}
+                    </GridList>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div><p>There seems to be some trouble showing the board.</p></div>
+            )
+        } 
     }
-    else {
-        return (
-            <div><p>There seems to be some trouble showing the board.</p></div>
-        )
-    } 
 }
 
-const styles = {
+const fillStyles = (theme) => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
@@ -60,11 +94,20 @@ const styles = {
     gridTile: {
         width: 175,
         height: 175,
-        border: 'solid black',
+        border: 'solid red'
     },
-    gridImage: {
+    selectedCard: {
+        color: 'red',
+    }
+})
 
+const mapStateToProps = (state, ownProps) => {
+    return {
+        ...ownProps,
+        dealt: state.dealt,
+        cards: state.cards,
+        selected: state.tentativeSet
     }
 }
 
-export default Board
+export default connect(mapStateToProps)(Board)

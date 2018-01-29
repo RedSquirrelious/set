@@ -9,13 +9,13 @@ import { dealCards, selectCard, checkSet } from '../actions/gameActions'
 export class Game extends React.Component {
 
     static propTypes = {
+        theme: PropTypes.object,
         images: PropTypes.array,
         dispatch: PropTypes.func.isRequired
     }
 
     componentDidMount() {
-        const { dealt, images, cards, dispatch } = this.props
-        
+        const { dealt, images, cards, theme, dispatch } = this.props
         if (dealt === false) {
             let deck = generateDeckOfCards(images)
             dispatch(dealCards(deck))
@@ -26,12 +26,13 @@ export class Game extends React.Component {
         }
     }
     render() {
-        const {cards, dispatch } = this.props
+        const {cards, dispatch, theme } = this.props
         
         return (
             <div>
                 <Board 
                     cards={cards}
+                    theme={theme}
                     onClick={(card) => dispatch(selectCard(card))}
             />
             </div>
@@ -55,6 +56,7 @@ const makeCards = (array) => {
         fill: data[2],
         number: data[3],
         url: array[1],
+        selected: false,
         width: '10%'
     }
 }
