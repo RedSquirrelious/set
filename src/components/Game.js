@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Board from './Board'
-import { dealCards, selectCard, checkSet } from '../actions/gameActions'
+import { dealCards, selectCard, setNoSet, setYesSet } from '../actions/gameActions'
 
 export class Game extends React.Component {
 
@@ -15,14 +15,30 @@ export class Game extends React.Component {
     }
 
     componentDidMount() {
-        const { dealt, images, cards, theme, dispatch } = this.props
+        const { dealt, images, cards, set, theme, dispatch } = this.props
+        console.log('game props in component did mount', this.props)
         if (dealt === false) {
+            console.log('false here in dealt')
             let deck = generateDeckOfCards(images)
             dispatch(dealCards(deck))
         }
 
-        if (cards && cards.played && cards.played.length === 3) {
-            dispatch(checkSet(cards.played))
+        // if (cards && cards.played && cards.played.length === 3) {
+        //     dispatch(checkSet(cards.played))
+        // }
+
+        if (set && set.length === 3) {
+            console.log('i have 3 cards in my set')
+            dispatch(checkSet(set))
+        }
+    }
+
+    componentDidUpdate() {
+        console.log('componentDidUpdate props', this.props)
+        const { possibleSet, haveSet, checkingSet, dispatch } = this.props
+        if (possibleSet && possibleSet.length === 3) {
+            console.log('i have 3 cards in my possibleSet')
+            checkSetOverall(possibleSet, cardTypes, dispatch)
         }
     }
     render() {
@@ -70,11 +86,46 @@ const shuffleArray = (array) => {
     return array
 }
 
+const cardTypes = ['color', 'shape', 'fill', 'number']
+
+export const checkSetByType = (tentativeSet, type) => {
+    if (tentativeSet.length === 3) {
+        if (tentativeSet[0][type] === tentativeSet[1][type]
+            && tentativeSet[0][type] === tentativeSet[2][type]
+            && tentativeSet[1][type] === tentativeSet[2][type]) {
+            return 1
+        }
+        else if (tentativeSet[0][type] !== tentativeSet[1][type]
+            && tentativeSet[0][type] !== tentativeSet[2][type]
+            && tentativeSet[1][type] !== tentativeSet[2][type]) {
+            return 1
+        }
+        return 10
+    }
+}
+
+export const checkSetOverall = (tentativeSet, types, dispatch) => {
+    console.log(dispatch)
+    let counter = 0
+    for (let i = 0; i < types.length; i++) {
+        counter += checkSetByType(tentativeSet, types[i])
+    }
+    console.log('checking this set', tentativeSet)
+    debugger
+    counter < 10 ? 
+        dispatch(setYesSet(tentativeSet))
+        : dispatch(setNoSet(tentativeSet)) 
+}
+
 const mapStateToProps = (state, ownProps) => {
+    console.log('game state from mapstate2props', state)
     return {
         ...ownProps,
-        dealt: state.dealt,
+        dealt: state.game.dealt,
         cards: state.cards,
+        possibleSet: state.cards.possibleSet,
+        haveSet: state.haveSet,
+        checkingSet: state.checkingSet
     }
 }
 

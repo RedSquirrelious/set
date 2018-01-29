@@ -9,32 +9,12 @@ import ButtonBases from './ButtonBases'
 import ButtonBase from 'material-ui/ButtonBase'
 import SimpleMediaCard from './SimpleMediaCard'
 
-// class Board extends React.Component {
-//     render() {
-//         let deck
-//         const { cards, onClick, dispatch, theme } = this.props
-//         if (cards && cards.onBoard && cards.onBoard.length > 0) {
-//              deck = cards.onBoard
-//              console.log('deck', deck)
-//         }
-//         else {
-//             deck = []
-//         }
-//         return (
-//             <ButtonBases
-//                 images={deck}
-//                 />
-//         )
-//     }
-// }
 
 class Board extends React.Component {
     render() {
         const { cards, onClick, dispatch, theme } = this.props
-        const styles = fillStyles(theme)
-        console.log('theme from board', theme)
-        if (cards && cards.onBoard && cards.onBoard.length > 0) {
-            const deck = cards.onBoard
+        if (cards && cards.onBoard) {
+            const deck = Object.values(cards.onBoard)
             console.log('deck on board', deck)
             return (
                 <div style={styles.root}>
@@ -79,7 +59,7 @@ class Board extends React.Component {
     }
 }
 
-const fillStyles = (theme) => ({
+const styles = {
     root: {
         display: 'flex',
         flexWrap: 'wrap',
@@ -99,7 +79,7 @@ const fillStyles = (theme) => ({
     selectedCard: {
         color: 'red',
     }
-})
+}
 
 const mapStateToProps = (state, ownProps) => {
     return {

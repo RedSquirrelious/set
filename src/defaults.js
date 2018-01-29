@@ -1,4 +1,4 @@
-const defaultState = {
+const goalState = {
     cards: {
         onBoard: [],
         played: [],
@@ -10,4 +10,16 @@ const defaultState = {
     set: false
 }
 
-export default defaultState
+export const defaultGame = {
+    dealt: false,
+    haveSet: false,
+    checkingSet: false
+}
+
+export const defaultCards = {
+    onBoard: {},
+    played: {},
+    inDeck: {},
+    possibleSet: []
+}
+

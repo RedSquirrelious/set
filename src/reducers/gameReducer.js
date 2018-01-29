@@ -1,32 +1,22 @@
-import defaultState from '../defaults'
-import { DEAL_CARDS, SELECT_CARD, CHECK_SET } from '../actions/gameActions'
+import { defaultGame } from '../defaults'
+import { DEAL_CARDS, SELECT_CARD, CHECK_SET, SET_NO_SET, SET_YES_SET } from '../actions/gameActions'
 import * as gameActions from '../actions/gameActions'    
+
+const defaultState = defaultGame
 
 const gameReducer = (state = defaultState, action) => {
     switch (action.type) {
         case DEAL_CARDS:
-            let forBoard = action.cards.slice(0, 18)
-            let forDeck = action.cards.slice(19)
-            let boardStart = {
-                onBoard: forBoard,
-                played: [],
-                inDeck: forDeck
-            }
-            return { ...state, cards: boardStart, dealt: true }
-        case SELECT_CARD:
-            let copyOfState = {...state}
-            console.log(copyOfState)
-            console.log(action.card)
-            copyOfState.cards.onBoard = replaceCard([...state.cards.onBoard], action.card)
-            copyOfState.tentativeSet = state.tentativeSet.concat([action.card])
-            
-            // let updatedCards = updateCards(copyOfState.cards, action.card)
-            
-            return copyOfState
+            return { ...state, dealt: true }
         case CHECK_SET:
             const isSet = checkSetOverall(action.cards, action.types)
             const updatedPoints = updatePoints(isSet, state.points)
-            return { ...state, points: updatedPoints, set: isSet }
+            return { ...state, points: updatedPoints, haveSet: isSet, checkingSet: true}
+        case SET_NO_SET:
+            console.log('boooooooo')
+            return {...state, haveSet: false, checkingSet: false}
+        case SET_YES_SET:
+            console.log('yay')
         default:
             return state
     }
