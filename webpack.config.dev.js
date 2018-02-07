@@ -4,8 +4,9 @@ const port = 3000
 
 module.exports = {
     context: __dirname,
-    entry: [
-        path.resolve(__dirname, 'src/index.js')],
+    entry: ['react-hot-loader/patch',
+        'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+        path.join(__dirname, 'src/index')],
     target: 'web',
     cache: true,
     devtool: 'eval-source-map',
@@ -25,14 +26,14 @@ module.exports = {
         overlay: true,
         port: port,
         publicPath: '/',
-        noInfo: false,
         before(app) {
             app.use(express.static(path.join(__dirname, 'src', 'assets', 'images')))
         }
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.UglifyJsPlugin()
+        new webpack.NamedModulesPlugin(),
+        new webpack.NoEmitOnErrorsPlugin()
     ],
     module: {
         rules: [
@@ -43,7 +44,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     query: {
-                        presets: 'es2015'
+                        presets: ['es2015', 'stage-1']
                     }
                 }
             },
