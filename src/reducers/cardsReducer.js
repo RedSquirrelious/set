@@ -36,7 +36,6 @@ const cardsReducer = (state = defaultState, action) => {
             return tempCards
         case ADD_THREE_CARDS:
             let movedCards = moveCardsFromInDeckToOnBoard({ ...state })
-    
             return movedCards
         default:
             return state
