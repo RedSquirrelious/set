@@ -44,13 +44,13 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     query: {
-                        presets: ['es2015', 'stage-1']
+                        presets: ['@babel/preset-env']
                     }
                 }
             },
             {
                 test: /\.css$/,
-                loader: "style-loader!css-loader"
+                loader: "css-loader"
             },
             {
                 test: /\.scss$/,
