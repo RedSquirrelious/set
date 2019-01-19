@@ -3,13 +3,17 @@
     "version": "1.0.0",
     "description": "Set Practice Game",
     "scripts": {
-        "build": "cross-env NODE_ENV=production webpack --config webpack.config.dev.js",
+        "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
         "test": "jest",
-        "start": "cross-env NODE_ENV=dev babel-node srcServer.js "
+        "serve": "cross-env NODE_ENV=production babel-node srcServer.js",
+        "start": "cross-env NODE_ENV=dev babel-node srcServer.js --config=webpack.config.dev.js"
     },
     "author": "Sasha Pierson",
     "license": "MIT",
-    "dependencies": {},
+    "dependencies": {
+        "dotenv": "6.2.0",
+        "webpack-merge": "4.2.1"
+    },
     "devDependencies": {
         "@babel/cli": "7.2.3",
         "@babel/core": "7.2.2",
