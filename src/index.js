@@ -14,7 +14,6 @@ const render = (Component, store) =>
 
 render(MainComponent, store)
 
-// Webpack Hot Module Replacement API
 if (module.hot) {
     module.hot.accept('./components/MainComponent', () => {
         render(MainComponent, store)
@@ -24,5 +23,3 @@ if (module.hot) {
         store.replaceReducer(require('./reducers').default)
     })
 }
-
-// ReactDOM.render(<MainComponent store={store}/>, document.getElementById('root'))
