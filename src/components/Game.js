@@ -23,7 +23,6 @@ export class Game extends React.Component {
             dispatch(dealCards(deck))
         }
         if (set && set.length === 3) {
-            console.log('i have 3 cards in my set')
             dispatch(checkSet(set))
         }
     }
@@ -117,7 +116,6 @@ export const checkSetOverall = (tentativeSet, types, dispatch) => {
 }
 
 const addCards = (inDeck, dispatch) => {
-    console.log('this should go somewhere')
     if (inDeck.length > 0) {
         dispatch(addThreeCards())
     }
