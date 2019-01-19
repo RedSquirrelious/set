@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { AppContainer as HotContainer } from 'react-hot-loader'
 
 import { store } from './configureStore'
 import MainComponent from './components/MainComponent'
@@ -9,9 +8,7 @@ require('./styles/app.css')
 
 const render = (Component, store) =>
     ReactDOM.render(
-        <HotContainer>
-            <Component store={store} />
-        </HotContainer>,
+            <Component store={store} />,
         document.getElementById('root')
     )
 

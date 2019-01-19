@@ -1,13 +1,19 @@
 {
     "presets": [
-        "react",
-        "es2015",
-        "stage-1"
+        "@babel/preset-react",
+        [
+            "@babel/preset-env",
+            {
+                "targets": {
+                    "esmodules": true
+                }
+            }
+        ]
     ],
     "plugins": [
-        "transform-object-rest-spread",
-        "syntax-class-properties",
-        "transform-class-properties",
+        "@babel/proposal-class-properties",
+        "@babel/proposal-object-rest-spread",
+        "@babel/transform-async-to-generator",
         "react-hot-loader/babel"
     ]
 }
