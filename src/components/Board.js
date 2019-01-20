@@ -11,7 +11,6 @@ class Board extends React.Component {
         const { cards, onClick, dispatch, theme } = this.props
         if (cards && cards.onBoard) {
             const deck = Object.values(cards.onBoard)
-            console.log('deck on board', deck)
             return (
                 <div style={styles.root}>
                     <GridList
