@@ -1,26 +1,17 @@
 import React from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 
 import Board from './Board'
-import Scoreboard from './Scoreboard'
-import AddCards from './AddCards'
-import { dealCards, selectCard, setNoSet, setYesSet, addThreeCards } from '../actions/gameActions'
+import ButtonAppBar from './ButtonAppBar'
+
+import { dealCards, selectCard, setNoSet, setYesSet, addThreeCards, resetScore } from '../actions/gameActions'
 
 export class Game extends React.Component {
-
-    static propTypes = {
-        theme: PropTypes.object,
-        images: PropTypes.array,
-        dispatch: PropTypes.func.isRequired
-    }
 
     componentDidMount() {
         const { dealt, images, cards, set, theme, dispatch } = this.props
         if (dealt === false) {
-            let deck = generateDeckOfCards(images)
-            dispatch(dealCards(deck, 18))
+            deal(dispatch)
         }
         if (set && set.length === 3) {
             dispatch(checkSet(set))
@@ -36,23 +27,20 @@ export class Game extends React.Component {
     render() {
         const {cards, score, dispatch, theme } = this.props       
         return (
-            <div>
-                <div className='header'>
-                    <Scoreboard 
-                        score={score}
-                    />
-                    <AddCards 
-                        addMethod={() => addCards(cards.inDeck, dispatch)}
-                    />
-                </div>
+            <span>
+                <ButtonAppBar 
+                    score ={score}
+                    addMethod={() => addCards(cards.inDeck, dispatch)}
+                    dealMethod={() => deal(dispatch)}
+                />
                 <div>
                     <Board 
                         cards={cards}
                         theme={theme}
                         onClick={(card) => dispatch(selectCard(card))}
-                />
+                    />
                 </div>
-            </div>
+            </span>
         )
     }
 }
@@ -85,6 +73,14 @@ const shuffleArray = (array) => {
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array
+}
+
+const deal = (dispatch) => {
+    const image = require('../assets/assetList.js')
+    const rawImages = Object.entries(image)
+    let deck = generateDeckOfCards(rawImages)
+    dispatch(resetScore())
+    dispatch(dealCards(deck, 18))
 }
 
 const cardTypes = ['color', 'shape', 'fill', 'number']
