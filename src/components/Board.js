@@ -1,10 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import GridList, { GridListTile } from 'material-ui/GridList'
-
-import { withStyles } from 'material-ui/styles'
-import { withTheme } from 'material-ui/styles'
-import ButtonBase from 'material-ui/ButtonBase'
+import GridList from '@material-ui/core/GridList'
+import GridListTile from '@material-ui/core/GridListTile'
+import ButtonBase from '@material-ui/core/ButtonBase'
 
 class Board extends React.Component {
     render() {
