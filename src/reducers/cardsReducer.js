@@ -13,19 +13,19 @@ const cardsReducer = (state = defaultState, action) => {
     switch (action.type) {
         case DEAL_CARDS:
             let deckCopy = [...action.cards]
-            let updatedOnBoard = deckCopy.slice(0, 18)
-            let updatedInDeck = deckCopy.slice(19)
+            let updatedOnBoard = deckCopy.slice(0, action.number)
+            let updatedInDeck = deckCopy.slice(action.number)
             return { ...state, onBoard: updatedOnBoard, inDeck: updatedInDeck}
         case SELECT_CARD:
-            let onBoardCopy = [...state.onBoard]
+            let onBoardCopy = [...(state.onBoard || [])]
             let cardIndex = onBoardCopy.findIndex(card => card.id === action.card.id)
             let updatedCard = {...onBoardCopy[cardIndex], selected: true}
-            onBoardCopy[cardIndex] = updatedCard
-            let updatedSet = [...state.possibleSet].concat([updatedCard])
+            onBoardCopy[cardIndex] = updatedCard       
+            let updatedSet = [...(state.possibleSet || [])].concat([updatedCard])
             return {...state, possibleSet: updatedSet, onBoard: onBoardCopy}
         case SET_NO_SET:
             let tempNoSet = {...state}
-            let boardWithoutSet = updateCardSelectionStatus(tempNoSet.onBoard, tempNoSet.possibleSet)
+            let boardWithoutSet = unselectCards(tempNoSet.onBoard, tempNoSet.possibleSet)
             return { ...state, onBoard: boardWithoutSet, possibleSet: []}
         case SET_YES_SET:
             let tempCards = moveCardsFromInDeckToOnBoard({...state})
@@ -42,8 +42,7 @@ const cardsReducer = (state = defaultState, action) => {
     }
 }
 
-const updateCardSelectionStatus = (cardsOnBoard, selectedCards) => {
-    let wantedCard
+export const unselectCards = (cardsOnBoard, selectedCards) => {
     let updatedCard
     let cardIndex
     for (let i = 0; i < selectedCards.length; i++) {
@@ -62,11 +61,17 @@ export const updateOnBoardAfterSet = (cardsOnBoard, set) => {
 
 export const moveCardsFromInDeckToOnBoard = (cards) => {
     let newCard
-    if (cards.inDeck.length != 0) {
+    
+    if (cards.inDeck.length > 3) {
         for (let i = 3; i > 0; i--) {
             newCard = cards.inDeck.pop()
             cards.onBoard.push(newCard)
     
+        }
+    } else {
+        for (let i = cards.inDeck.length; i > 0; i--) {
+            newCard = cards.inDeck.pop()
+            cards.onBoard.push(newCard)
         }
     }
     return cards

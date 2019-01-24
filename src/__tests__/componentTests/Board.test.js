@@ -1,5 +1,5 @@
 import React from 'react'
-import { GridList, GridTile } from 'material-ui/GridList'
+import { GridList, GridTile } from '@material-ui/core/GridList'
 
 import renderer from 'react-test-renderer'
 

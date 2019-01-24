@@ -1,7 +1,7 @@
 import reducer, { updateCards, checkSetByType, checkSetOverall, updatePoints } from '../../reducers/gameReducer'
 import defaultState from '../../defaults'
 
-describe('boardReducer', () => {
+describe('gameReducer', () => {
 
     describe('updateCards', () => {
         describe('when everything has the needed value', () => {
@@ -71,27 +71,6 @@ describe('boardReducer', () => {
             it('should not put anything else on the board', () => {
                 expect(updateCards(testState, testAction.card).onBoard).toEqual([])
             })
-        })
-    })
-
-    describe('SELECT_CARD', ()=> {
-        const testAction = {
-            type: 'SELECT_CARD',
-            card: { id: 'TEST' }
-        }
-        const testState = {
-            cards: {
-                onBoard: [{ id: 'TEST' }],
-                played: [],
-                inDeck: []
-            }
-        }
-
-        let result = reducer(testState, testAction)
-        it('should return updated state', () => {
-            expect(reducer(testState, testAction).cards.onBoard).toEqual([])
-            expect(reducer(testState, testAction).cards.played).toEqual([{ id: 'TEST' }])
-            expect(reducer(testState, testAction).cards.inDeck).toEqual([])
         })
     })
 

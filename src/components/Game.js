@@ -1,26 +1,27 @@
-import React from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
-import Board from './Board'
-import Scoreboard from './Scoreboard'
-import AddCards from './AddCards'
-import { dealCards, selectCard, setNoSet, setYesSet, addThreeCards } from '../actions/gameActions'
+import Board from './Board';
+import Scoreboard from './Scoreboard';
+import AddCards from './AddCards';
+import NewGame from './NewGame';
+import { dealCards, selectCard, setNoSet, setYesSet, addThreeCards } from '../actions/gameActions';
 
 export class Game extends React.Component {
 
-    static propTypes = {
-        theme: PropTypes.object,
-        images: PropTypes.array,
-        dispatch: PropTypes.func.isRequired
-    }
+    // static propTypes = {
+    //     theme: PropTypes.object,
+    //     images: PropTypes.array,
+    //     dispatch: PropTypes.func.isRequired
+    // }
 
     componentDidMount() {
         const { dealt, images, cards, set, theme, dispatch } = this.props
         if (dealt === false) {
             let deck = generateDeckOfCards(images)
-            dispatch(dealCards(deck))
+            dispatch(dealCards(deck, 18))
         }
         if (set && set.length === 3) {
             dispatch(checkSet(set))
@@ -36,23 +37,26 @@ export class Game extends React.Component {
     render() {
         const {cards, score, dispatch, theme } = this.props       
         return (
-            <div>
-                <div className='header'>
+            <span>
+                < span className='header' >
                     <Scoreboard 
                         score={score}
                     />
-                    <AddCards 
+                    <AddCards
                         addMethod={() => addCards(cards.inDeck, dispatch)}
                     />
-                </div>
-                <div>
+                    <NewGame
+                        onClick={()=> console.log("hello there")}
+                    />
+                </span>
+                <span>
                     <Board 
                         cards={cards}
                         theme={theme}
                         onClick={(card) => dispatch(selectCard(card))}
                 />
-                </div>
-            </div>
+                </span>
+            </span>
         )
     }
 }
@@ -120,6 +124,15 @@ const addCards = (inDeck, dispatch) => {
         dispatch(addThreeCards())
     }
 }
+
+const styles = {
+    header: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignContent: 'center',
+    }
+};
 
 const mapStateToProps = (state, ownProps) => {
     return {

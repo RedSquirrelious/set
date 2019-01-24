@@ -1,18 +1,16 @@
 import React from 'react'
-import Button from 'material-ui/Button'
-
-import { addThreeCards } from '../actions/gameActions'
+import Button from '@material-ui/core/Button'
 
 const AddCards = (props) => {
     const { addMethod } = props
     return (
-        <div>
+        <span>
             <Button
                 onClick={addMethod}
             >
                 Add Cards
             </Button>
-        </div>
+        </span>
     )
 }
 
