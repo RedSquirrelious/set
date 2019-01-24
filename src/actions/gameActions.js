@@ -1,9 +1,10 @@
 export const DEAL_CARDS = 'DEAL_CARDS'
 
-export const dealCards = (cards) => {
+export const dealCards = (cards, number) => {
     return {
     type: DEAL_CARDS,
-        cards
+        cards,
+        number
     }
 }
 

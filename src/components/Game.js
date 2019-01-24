@@ -20,7 +20,7 @@ export class Game extends React.Component {
         const { dealt, images, cards, set, theme, dispatch } = this.props
         if (dealt === false) {
             let deck = generateDeckOfCards(images)
-            dispatch(dealCards(deck))
+            dispatch(dealCards(deck, 18))
         }
         if (set && set.length === 3) {
             dispatch(checkSet(set))
